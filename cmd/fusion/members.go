@@ -41,7 +41,7 @@ var listMembersCommand = cli.Command{
 			return err
 		}
 
-		w := tabwriter.NewWriter(os.Stdout, 0, 0, 1, ' ', 0)
+		w := tabwriter.NewWriter(os.Stdout, 0, 0, 8, ' ', 0)
 		fmt.Fprintln(w, "NAME\tTITLE\tSTATE\t")
 		for _, member := range members {
 			fmt.Fprintf(w, "%s %s\t%s\t%s\t\n", member.FirstName, member.LastName, member.Title, member.State)
