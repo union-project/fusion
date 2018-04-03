@@ -21,7 +21,10 @@ func NewManager(cfg *Config) (*Manager, error) {
 		return nil, err
 	}
 
-	db.AutoMigrate(&types.Member{})
+	db.AutoMigrate(
+		&types.Member{},
+		&types.Bill{},
+	)
 
 	return &Manager{
 		Config: cfg,

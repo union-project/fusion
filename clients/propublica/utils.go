@@ -1,13 +1,11 @@
 package propublica
 
 import (
-	"fmt"
 	"net/http"
 )
 
 func (c *Client) get(reqPath string) (*http.Response, error) {
 	p := apiEndpoint + reqPath
-	fmt.Println(p)
 	req, err := http.NewRequest("GET", p, nil)
 	if err != nil {
 		return nil, err

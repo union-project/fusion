@@ -1,23 +1,5 @@
 package types
 
-type Result struct {
-	Status    string `json:"status"`
-	Copyright string `json:"copyright"`
-}
-
-type MemberResponse struct {
-	Result
-	Results []ResultResponse `json:"results"`
-}
-
-type ResultResponse struct {
-	Congress        string   `json:"congress"`
-	Chamber         string   `json:"chamber"`
-	NumberOfResults int      `json:"num_results"`
-	Offset          int      `json:"offset"`
-	Members         []Member `json:"members"`
-}
-
 type Member struct {
 	ID             int    `json:"_id" gorm:"column:id;PRIMARY_KEY"`
 	MemberID       string `json:"id" gorm:"column:member_id"`
@@ -40,4 +22,12 @@ type Member struct {
 
 	State                    string  `json:"state,omitempty"`
 	VotesWithPartyPercentage float64 `json:"votes_with_party_pct,omitempty"`
+}
+
+type Bill struct {
+	ID       int    `json:"_id" gorm:"column:id;PRIMARY_KEY"`
+	BillID   string `json:"bill_id,omitempty"`
+	BillType string `json:"bill_type,omitempty"`
+	Number   string `json:"number,omitempty"`
+	Title    string `json:"title,omitempty"`
 }
