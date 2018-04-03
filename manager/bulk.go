@@ -35,7 +35,7 @@ func (m *Manager) ImportBillArchive(archivePath string, maxWorkers int) error {
 
 		logrus.WithFields(logrus.Fields{
 			"name": f.Name,
-		}).Debug("importing file")
+		}).Info("importing file")
 
 		wg.Add(1)
 

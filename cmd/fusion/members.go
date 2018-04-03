@@ -36,7 +36,7 @@ var listMembersCommand = cli.Command{
 			return err
 		}
 
-		members, err := m.Members(fusion.WithMemberOrder(c.String("order")))
+		members, err := m.Members(fusion.WithOrder(c.String("order")))
 		if err != nil {
 			return err
 		}

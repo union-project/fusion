@@ -5,7 +5,7 @@ import (
 	"github.com/union-project/fusion/types"
 )
 
-func (m *Manager) Members(opts ...fusion.ListMemberOpt) ([]types.Member, error) {
+func (m *Manager) Members(opts ...fusion.QueryOpt) ([]types.Member, error) {
 	var members []types.Member
 	db := m.db
 	for _, o := range opts {
