@@ -1,7 +1,9 @@
 package types
 
+import "github.com/jinzhu/gorm"
+
 type Member struct {
-	ID             int    `json:"_id" gorm:"column:id;PRIMARY_KEY"`
+	ID             int    `json:"_id" gorm:"column:id;primary_key;auto_increment"`
 	MemberID       string `json:"id" gorm:"column:member_id"`
 	Title          string `json:"title,omitempty"`
 	ShortTitle     string `json:"short_title,omitempty"`
@@ -25,9 +27,31 @@ type Member struct {
 }
 
 type Bill struct {
-	ID       int    `json:"_id" gorm:"column:id;PRIMARY_KEY"`
-	BillID   string `json:"bill_id,omitempty"`
-	BillType string `json:"bill_type,omitempty"`
-	Number   string `json:"number,omitempty"`
-	Title    string `json:"title,omitempty"`
+	ID           int     `json:"_id" gorm:"column:id;primary_key;auto_increment"`
+	BillID       string  `json:"bill_id,omitempty"`
+	BillType     string  `json:"bill_type,omitempty"`
+	ByRequest    bool    `json:"by_request,omitempty"`
+	Number       string  `json:"number,omitempty"`
+	Title        string  `json:"official_title,omitempty"`
+	Sponsor      Sponsor `json:"sponsor,omitempty" gorm:"foreignkey:SponsorID"`
+	IntroducedAt string  `json:"introduced_at,omitempty"`
+	Status       string  `json:"status,omitempty"`
+	StatusAt     string  `json:"status_at,omitempty"`
+	Summary      Summary `json:"summary,omitempty" gorm:"foreignkey:SummaryID"`
+	UpdatedAt    string  `json:"updated_at,omitempty"`
+}
+
+type Sponsor struct {
+	gorm.Model
+	Name  string `json:"name,omitempty"`
+	State string `json:"state,omitempty"`
+	Title string `json:"title,omitempty"`
+	Type  string `json:"type,omitempty"`
+}
+
+type Summary struct {
+	gorm.Model
+	As   string `json:"as,omitempty"`
+	Date string `json:"date,omitempty"`
+	Text string `json:"text,omitempty"`
 }

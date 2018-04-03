@@ -2,31 +2,23 @@ package manager
 
 import (
 	"github.com/sirupsen/logrus"
-	"github.com/union-project/fusion/clients/propublica"
 	"github.com/union-project/fusion/types"
 )
 
 func (m *Manager) Sync() error {
-	client, err := propublica.NewClient(&propublica.Config{
-		APIKey: m.Config.ProPublicaAPIKey,
-	})
-	if err != nil {
+	if err := m.syncMembers(); err != nil {
 		return err
 	}
 
-	if err := m.syncMembers(client); err != nil {
-		return err
-	}
-
-	if err := m.syncBills(client); err != nil {
+	if err := m.syncBills(); err != nil {
 		return err
 	}
 
 	return nil
 }
 
-func (m *Manager) syncMembers(client *propublica.Client) error {
-	members, err := client.Members()
+func (m *Manager) syncMembers() error {
+	members, err := m.propublicaClient.Members()
 	if err != nil {
 		return err
 	}
@@ -50,14 +42,14 @@ func (m *Manager) syncMembers(client *propublica.Client) error {
 	return nil
 }
 
-func (m *Manager) syncBills(client *propublica.Client) error {
-	bills, err := client.SearchBills("")
+func (m *Manager) syncBills() error {
+	bills, err := m.propublicaClient.SearchBills("")
 	if err != nil {
 		return err
 	}
 
 	for _, bill := range bills {
-		if err := m.db.FirstOrCreate(&bill, types.Bill{BillID: bill.BillID}).Error; err != nil {
+		if err := m.saveBill(bill); err != nil {
 			logrus.WithFields(logrus.Fields{
 				"id": bill.BillID,
 			}).WithError(err).Error("unable to update bill")

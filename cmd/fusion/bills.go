@@ -37,10 +37,21 @@ var listBillsCommand = cli.Command{
 		w := tabwriter.NewWriter(os.Stdout, 0, 0, 8, ' ', 0)
 		fmt.Fprintln(w, "TITLE\tID\tTYPE\t")
 		for _, bill := range bills {
-			fmt.Fprintf(w, "%s %s\t%s\t%s\t\n", bill.Title, bill.BillID, bill.BillType)
+			fmt.Fprintf(w, "%s\t%s\t%s\t\n", truncate(bill.Title, 125), bill.BillID, bill.BillType)
 		}
 		w.Flush()
 
 		return nil
 	},
+}
+
+func truncate(str string, num int) string {
+	b := str
+	if len(str) > num {
+		if num > 3 {
+			num -= 3
+		}
+		b = str[0:num] + "..."
+	}
+	return b
 }

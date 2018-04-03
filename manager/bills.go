@@ -22,3 +22,11 @@ func (m *Manager) Bills(opts ...fusion.ListBillOpt) ([]types.Bill, error) {
 
 	return bills, nil
 }
+
+func (m *Manager) saveBill(bill types.Bill) error {
+	if err := m.db.FirstOrCreate(&bill, types.Bill{BillID: bill.BillID}).Error; err != nil {
+		return err
+	}
+
+	return nil
+}

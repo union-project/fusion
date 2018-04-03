@@ -45,6 +45,7 @@ func main() {
 		membersCommand,
 		billsCommand,
 		syncCommand,
+		importCommand,
 	}
 
 	if err := app.Run(os.Args); err != nil {
