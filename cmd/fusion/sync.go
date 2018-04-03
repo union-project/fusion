@@ -6,7 +6,7 @@ import (
 
 var syncCommand = cli.Command{
 	Name:   "sync",
-	Usage:  "start data sync",
+	Usage:  "sync remote data",
 	Action: syncAction,
 }
 

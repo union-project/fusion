@@ -20,7 +20,7 @@ func (m *Manager) Sync() error {
 	}
 
 	for _, member := range members {
-		if err := m.createOrUpdateMember(&member); err != nil {
+		if err := m.db.FirstOrCreate(&member, types.Member{MemberID: member.MemberID}).Error; err != nil {
 			logrus.WithFields(logrus.Fields{
 				"member": member.MemberID,
 			}).WithError(err).Error("unable to update member")
@@ -36,18 +36,4 @@ func (m *Manager) Sync() error {
 	}
 
 	return nil
-}
-
-func (m *Manager) createOrUpdateMember(member *types.Member) error {
-	//var mbr *types.Member
-	//if err := m.db.Find(&mbr, member.MemberID).Error; err != nil {
-	//	logrus.Errorf("unable to find member %s", member.MemberID)
-	//	return err
-	//}
-
-	//if mbr != nil {
-	//	return m.db.Model(mbr).Where("MemberID = ?", member.MemberID).Update(member).Error
-	//}
-
-	return m.db.FirstOrCreate(member, types.Member{MemberID: member.MemberID}).Error
 }

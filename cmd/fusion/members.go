@@ -2,8 +2,11 @@ package main
 
 import (
 	"fmt"
+	"os"
+	"text/tabwriter"
 
 	"github.com/codegangsta/cli"
+	"github.com/union-project/fusion"
 )
 
 var membersCommand = cli.Command{
@@ -20,18 +23,30 @@ var listMembersCommand = cli.Command{
 		"ls",
 	},
 	Usage: "list members",
+	Flags: []cli.Flag{
+		cli.StringFlag{
+			Name:  "order, o",
+			Usage: "order by",
+			Value: "first_name",
+		},
+	},
 	Action: func(c *cli.Context) error {
 		m, err := getManager(c)
 		if err != nil {
 			return err
 		}
 
-		members, err := m.Members()
+		members, err := m.Members(fusion.WithMemberOrder(c.String("order")))
 		if err != nil {
 			return err
 		}
 
-		fmt.Println(members)
+		w := tabwriter.NewWriter(os.Stdout, 0, 0, 1, ' ', 0)
+		fmt.Fprintln(w, "NAME\tTITLE\tSTATE\t")
+		for _, member := range members {
+			fmt.Fprintf(w, "%s %s\t%s\t%s\t\n", member.FirstName, member.LastName, member.Title, member.State)
+		}
+		w.Flush()
 
 		return nil
 	},
