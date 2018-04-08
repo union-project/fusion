@@ -1,7 +1,5 @@
 package types
 
-import "github.com/jinzhu/gorm"
-
 type Member struct {
 	ID             int    `json:"_id" gorm:"column:id;primary_key;auto_increment"`
 	MemberID       string `json:"id" gorm:"column:member_id"`
@@ -27,31 +25,20 @@ type Member struct {
 }
 
 type Bill struct {
-	ID           int     `json:"_id" gorm:"column:id;primary_key;auto_increment"`
-	BillID       string  `json:"bill_id,omitempty"`
-	BillType     string  `json:"bill_type,omitempty"`
-	ByRequest    bool    `json:"by_request,omitempty"`
-	Number       string  `json:"number,omitempty"`
-	Title        string  `json:"official_title,omitempty"`
-	Sponsor      Sponsor `json:"sponsor,omitempty" gorm:"foreignkey:SponsorID"`
-	IntroducedAt string  `json:"introduced_at,omitempty"`
-	Status       string  `json:"status,omitempty"`
-	StatusAt     string  `json:"status_at,omitempty"`
-	Summary      Summary `json:"summary,omitempty" gorm:"foreignkey:SummaryID"`
-	UpdatedAt    string  `json:"updated_at,omitempty"`
-}
-
-type Sponsor struct {
-	gorm.Model
-	Name  string `json:"name,omitempty"`
-	State string `json:"state,omitempty"`
-	Title string `json:"title,omitempty"`
-	Type  string `json:"type,omitempty"`
-}
-
-type Summary struct {
-	gorm.Model
-	As   string `json:"as,omitempty"`
-	Date string `json:"date,omitempty"`
-	Text string `json:"text,omitempty"`
+	ID             int    `json:"_id" gorm:"column:id;primary_key;auto_increment"`
+	BillID         string `json:"bill_id,omitempty"`
+	BillType       string `json:"bill_type,omitempty"`
+	Bill           string `json:"bill,omitempty"`
+	Number         string `json:"number,omitempty"`
+	Title          string `json:"title,omitempty"`
+	ShortTitle     string `json:"short_title,omitempty"`
+	Sponsor        string `json:"sponsor,omitempty"`
+	Introduced     string `json:"introduced_date,omitempty"`
+	Active         bool   `json:"active,omitempty"`
+	LastVote       string `json:"last_vote,omitempty"`
+	HousePassage   string `json:"house_passage,omitempty"`
+	SenatePassage  string `json:"senate_passage,omitempty"`
+	Summary        string `json:"summary,omitempty"`
+	LastAction     string `json:"latest_major_action,omitempty"`
+	LastActionDate string `json:"latest_major_action_date,omitempty"`
 }

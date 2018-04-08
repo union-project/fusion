@@ -26,8 +26,6 @@ func NewManager(cfg *Config) (*Manager, error) {
 	db.AutoMigrate(
 		&types.Member{},
 		&types.Bill{},
-		&types.Sponsor{},
-		&types.Summary{},
 	)
 
 	client, err := propublica.NewClient(&propublica.Config{

@@ -32,6 +32,7 @@ func main() {
 		cli.StringFlag{
 			Name:   "db-addr",
 			Usage:  "Fusion DB Address",
+			Value: "postgresql://fusion@127.0.0.1:26257/fusion?sslmode=disable",
 			EnvVar: "FUSION_DB_ADDR",
 		},
 		cli.StringFlag{

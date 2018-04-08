@@ -32,7 +32,7 @@ var listBillsCommand = cli.Command{
 		cli.StringFlag{
 			Name:  "order, o",
 			Usage: "order by",
-			Value: "updated_at DESC",
+			Value: "last_action_date DESC",
 		},
 	},
 	Action: func(c *cli.Context) error {
@@ -54,9 +54,9 @@ var listBillsCommand = cli.Command{
 		}
 
 		w := tabwriter.NewWriter(os.Stdout, 0, 0, 8, ' ', 0)
-		fmt.Fprintln(w, "TITLE\tID\tTYPE\tINTRODUCED\tUPDATED\t")
+		fmt.Fprintln(w, "TITLE\tID\tTYPE\tINTRODUCED\tLAST ACTION\t")
 		for _, bill := range bills {
-			fmt.Fprintf(w, "%s\t%s\t%s\t%s\t%s\t\n", truncate(bill.Title, 80), bill.BillID, bill.BillType, bill.IntroducedAt, bill.UpdatedAt)
+			fmt.Fprintf(w, "%s\t%s\t%s\t%s\t%s\t\n", truncate(bill.Title, 80), bill.BillID, bill.BillType, bill.Introduced, bill.LastActionDate)
 		}
 		w.Flush()
 

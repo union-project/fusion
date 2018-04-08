@@ -55,6 +55,7 @@ func (m *Manager) syncBills() error {
 			}).WithError(err).Error("unable to update bill")
 			continue
 		}
+
 		logrus.WithFields(logrus.Fields{
 			"id":    bill.BillID,
 			"title": bill.Title,

@@ -88,6 +88,7 @@ func (m *Manager) handler(id int, r chan *types.Bill, wg *sync.WaitGroup) {
 		logrus.WithFields(logrus.Fields{
 			"worker": id,
 			"id":     bill.BillID,
+			"title":  bill.Title,
 		}).Debug("imported bill")
 		wg.Done()
 	}
